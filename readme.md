@@ -1,6 +1,6 @@
 # GDF Game Development
 
-Das ist ein test repo
+This repository is for the GDF Game Development course.
 
 ## Unity
 
