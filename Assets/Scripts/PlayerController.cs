@@ -1,13 +1,17 @@
 using UnityEngine;
 
-[RequireComponent(typeof(Rigidbody))] // Automatically add Rigidbody component if not already present.
+[RequireComponent(typeof(Rigidbody), typeof(AudioSource))] // Automatically add Rigidbody component if not already present.
 public class PlayerController : MonoBehaviour {
     float speed = 7.0f;
     float rotationSpeed = 200.0f; 
-    Rigidbody rb;
+    Rigidbody _rb;
+    AudioSource _audioSource;
+
+    [SerializeField] private AudioClip[] footstepSounds;
 
     private void Start() {
-        rb = GetComponent<Rigidbody>();
+        _rb = GetComponent<Rigidbody>();
+        _audioSource = GetComponent<AudioSource>();
 
         Cursor.lockState = CursorLockMode.Locked; // Lock cursor to center of screen.
         Cursor.visible = false; // Hide cursor.
@@ -28,7 +32,14 @@ public class PlayerController : MonoBehaviour {
         float moveHorizontal = Input.GetAxis("Horizontal");
         Vector3 movementVertical = transform.forward * moveVertical * speed * Time.deltaTime;
         Vector3 movementHorizontal = transform.right * moveHorizontal * speed * Time.deltaTime;
-        rb.MovePosition(rb.position + movementVertical + movementHorizontal);
+        _rb.MovePosition(_rb.position + movementVertical + movementHorizontal);
+
+        // Play footstep sounds.
+        if (moveVertical != 0 || moveHorizontal != 0) {
+            if (!_audioSource.isPlaying) {
+                _audioSource.PlayOneShot(footstepSounds[Random.Range(0, footstepSounds.Length)]);
+            }
+        }
     }
 
     /// <summary>
@@ -39,6 +50,6 @@ public class PlayerController : MonoBehaviour {
         float mouseX = Input.GetAxis("Mouse X");
         Vector3 rotation = Vector3.up * mouseX * rotationSpeed * Time.deltaTime;
         Quaternion deltaRotation = Quaternion.Euler(rotation);
-        rb.MoveRotation(rb.rotation * deltaRotation);
+        _rb.MoveRotation(_rb.rotation * deltaRotation);
     }
 }
