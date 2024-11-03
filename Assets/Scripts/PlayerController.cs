@@ -6,12 +6,14 @@ public class PlayerController : MonoBehaviour {
     float rotationSpeed = 200.0f; 
     Rigidbody _rb;
     AudioSource _audioSource;
+    Animator _animator;
 
     [SerializeField] private AudioClip[] footstepSounds;
 
     private void Start() {
         _rb = GetComponent<Rigidbody>();
         _audioSource = GetComponent<AudioSource>();
+        _animator = GetComponent<Animator>();
 
         Cursor.lockState = CursorLockMode.Locked; // Lock cursor to center of screen.
         Cursor.visible = false; // Hide cursor.
@@ -39,6 +41,9 @@ public class PlayerController : MonoBehaviour {
             if (!_audioSource.isPlaying) {
                 _audioSource.PlayOneShot(footstepSounds[Random.Range(0, footstepSounds.Length)]);
             }
+            _animator.SetBool("isWalking", true);
+        } else {
+            _animator.SetBool("isWalking", false);
         }
     }
 
