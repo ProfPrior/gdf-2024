@@ -80,6 +80,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 844853acaec888e4789f5e294dd089f4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  collectEffect: {fileID: 8265455732166717053, guid: 5a0a0aed32570df4cb2c67691d03c985, type: 3}
   collectSound: {fileID: 8300000, guid: 0b71c62d545cc3843ae978cb58c8c67c, type: 3}
 --- !u!135 &2832833168302647661
 SphereCollider:
